@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concord Hospitality &times; Reeco — Digital Sales Room</title>
+<meta name="description" content="Private digital sales room for the Concord Hospitality team. A hospitality-native procurement platform across purchasing, AP automation, inventory, and culinary management.">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="icon" href="assets/reeco-mark.svg">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+  body { margin: 0; background: #fff; color: var(--fg-1); font-family: var(--font-sans); }
+
+  ::selection { background: var(--mint-100); color: var(--navy-900); }
+
+  a { color: var(--fg-link); text-decoration: none; font-weight: var(--fw-semi); }
+  a:hover { text-decoration: underline; }
+
+  /* ──────────────── NAV ──────────────── */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border-1);
+  }
+  .nav-inner {
+    max-width: 1240px; margin: 0 auto; padding: 18px 32px;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 32px;
+  }
+  .nav-brand-group { display: flex; align-items: center; gap: 18px; justify-self: start; min-width: 0; }
+  .nav-brand { display: flex; align-items: center; }
+  .nav-brand img { height: 24px; display: block; }
+  .nav-divider { width: 1px; height: 24px; background: var(--stone-300); flex-shrink: 0; }
+  .nav-context { font-size: 13px; color: var(--stone-700); font-weight: var(--fw-medium); white-space: nowrap; }
+  .nav-context strong { color: var(--navy-900); font-weight: var(--fw-bold); }
+
+  .nav-tabs { display: flex; gap: 4px; justify-self: center; }
+  .nav-tab {
+    padding: 9px 16px; border-radius: var(--radius-pill);
+    font-size: 14px; font-weight: var(--fw-bold);
+    color: var(--navy-900); cursor: pointer; white-space: nowrap;
+    background: transparent; border: none; font-family: var(--font-sans);
+    text-transform: none; letter-spacing: 0; text-decoration: none;
+    transition: all var(--duration-med) var(--ease-out);
+  }
+  .nav-tab:hover { background: var(--stone-100); color: var(--mint-700); text-decoration: none; }
+  .nav-tab.active { background: var(--navy-900); color: #fff; }
+
+  .nav-cta-wrap { justify-self: end; }
+
+  @media (max-width: 980px) {
+    .nav-inner { grid-template-columns: 1fr auto; gap: 16px; padding: 14px 20px; }
+    .nav-context { display: none; }
+    .nav-tabs { grid-column: 1 / -1; justify-self: stretch; order: 3; overflow-x: auto; padding-top: 4px; }
+    .nav-cta-wrap { justify-self: end; }
+  }
+
+  /* ──────────────── BUTTONS ──────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: var(--radius-xl);
+    font-size: 14px; font-weight: var(--fw-semi);
+    border: 1px solid transparent; cursor: pointer;
+    transition: all var(--duration-med) var(--ease-out);
+    text-decoration: none; font-family: var(--font-sans);
+  }
+  .btn-primary { background: var(--mint-500); color: #fff; }
+  .btn-primary:hover { background: var(--mint-700); text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn .arr { transition: transform var(--duration-med) var(--ease-out); }
+  .btn:hover .arr { transform: translateX(3px); }
+
+  /* ──────────────── SECTION SHELL ──────────────── */
+  section { padding: 92px 32px; position: relative; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 11px; font-weight: var(--fw-bold); letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--mint-700);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before { content: "///"; color: var(--mint-500); letter-spacing: 0; }
+  .section-title {
+    font-size: 44px; font-weight: var(--fw-black);
+    letter-spacing: -0.012em; line-height: 1.1;
+    color: var(--navy-900); margin: 14px 0 16px;
+    max-width: 880px; text-wrap: balance;
+  }
+  .section-sub {
+    font-size: 17px; line-height: 1.6; color: var(--stone-700);
+    max-width: 700px; margin: 0 0 48px; text-wrap: pretty;
+  }
+  @media (max-width: 720px) {
+    section { padding: 60px 22px; }
+    .section-title { font-size: 32px; }
+    .section-sub { font-size: 15px; }
+  }
+
+  /* ──────────────── HERO ──────────────── */
+  .hero {
+    position: relative; overflow: hidden;
+    background: var(--mint-500);
+    color: var(--navy-900);
+    padding: 56px 32px 0;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: auto -120px -180px auto;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.30), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.35fr 1fr;
+    gap: 64px; align-items: start;
+    padding-bottom: 120px;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(10, 24, 74, 0.12);
+    color: var(--navy-900);
+    padding: 7px 15px; border-radius: 999px;
+    font-size: 11px; font-weight: var(--fw-bold);
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .hero-eyebrow .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--navy-900);
+    animation: pulse 2s var(--ease-out) infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 76px);
+    font-weight: var(--fw-black);
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    color: var(--navy-900);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--navy-900);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.6em;
+    font-weight: var(--fw-regular);
+    opacity: 0.42;
+    margin: 0 0.04em;
+    vertical-align: 0.22em;
+    font-family: var(--font-sans);
+  }
+  .hero-sub {
+    font-size: 19px; line-height: 1.55; color: var(--navy-900);
+    max-width: 560px; opacity: 0.85; margin: 0 0 24px;
+    font-weight: var(--fw-medium);
+  }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; padding-bottom: 80px; gap: 40px; }
+    .hero { padding: 48px 22px 0; }
+  }
+
+  /* ──────────────── MEETING CARD ──────────────── */
+  .meeting-card {
+    background: #fff;
+    border-radius: var(--radius-2xl);
+    padding: 28px;
+    box-shadow: var(--shadow-xl);
+    color: var(--navy-900);
+    position: relative;
+  }
+  .meeting-eyebrow { font-size: 11px; font-weight: var(--fw-bold); letter-spacing: 2px; text-transform: uppercase; color: var(--mint-700); }
+  .meeting-title { font-size: 22px; font-weight: var(--fw-bold); color: var(--navy-900); margin: 6px 0 20px; letter-spacing: -0.008em; line-height: 1.2; }
+  .meeting-when { display: grid; grid-template-columns: 68px 1fr; gap: 16px; align-items: center; padding: 20px 0; border-top: 1px solid var(--stone-200); }
+  .meeting-when-date { display: flex; flex-direction: column; align-items: center; background: var(--mint-100); border-radius: var(--radius-lg); padding: 10px 0; }
+  .meeting-when-date .day { font-size: 30px; font-weight: var(--fw-black); letter-spacing: -0.02em; line-height: 1; color: var(--navy-900); }
+  .meeting-when-date .mon { font-size: 10px; font-weight: var(--fw-bold); letter-spacing: 1.5px; text-transform: uppercase; color: var(--mint-800); margin-top: 5px; }
+  .meeting-when-meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .meeting-when-meta .l1 { font-size: 15px; font-weight: var(--fw-bold); color: var(--navy-900); letter-spacing: -0.005em; }
+  .meeting-when-meta .l2, .meeting-when-meta .l3 { font-size: 13px; color: var(--stone-700); font-weight: var(--fw-medium); line-height: 1.4; }
+
+  .meeting-attendees { border-top: 1px solid var(--stone-200); padding-top: 18px; }
+  .attendee-label { font-size: 11px; font-weight: var(--fw-bold); letter-spacing: 1.5px; text-transform: uppercase; color: var(--stone-500); margin-bottom: 14px; }
+  .attendee-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .att-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: var(--fw-semi); color: var(--navy-900);
+    background: var(--stone-100); border: 1px solid var(--stone-200);
+    padding: 6px 12px; border-radius: 999px;
+  }
+
+  /* ──────────────── PROBLEM / SOLUTION TWO-COLUMN ──────────────── */
+  .ps2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ps2-card { padding: 32px; border-radius: var(--radius-2xl); }
+  .ps2-card.problem { background: var(--rose-100); border: 1px solid var(--rose-200); }
+  .ps2-card.answer { background: var(--mint-100); border: 1px solid var(--mint-200); }
+  .ps2-eyebrow {
+    font-size: 10px; font-weight: var(--fw-bold); letter-spacing: 2px;
+    text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 8px;
+  }
+  .ps2-eyebrow.problem { color: #B81E63; }
+  .ps2-eyebrow.answer { color: var(--mint-800); }
+  .ps2-eyebrow .ps-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .ps2-eyebrow.problem .ps-dot { background: var(--rose-500); }
+  .ps2-eyebrow.answer .ps-dot { background: var(--mint-500); }
+  .ps2-card h3 { font-size: 22px; font-weight: var(--fw-bold); color: var(--navy-900); margin: 0 0 22px; letter-spacing: -0.01em; line-height: 1.2; }
+  .ps2-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .ps2-list li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 14.5px; line-height: 1.55; color: var(--stone-700); }
+  .ps2-list li strong { color: var(--navy-900); font-weight: var(--fw-bold); }
+  .ps2-mark { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ps2-mark.problem { background: rgba(255,71,154,0.18); color: #B81E63; }
+  .ps2-mark.answer { background: var(--mint-200); color: var(--mint-800); }
+
+  /* ──────────────── STATS BAR ──────────────── */
+  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+  .stat-cell { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-2xl); padding: 32px; }
+  .stat-num { font-size: 52px; font-weight: var(--fw-black); letter-spacing: -0.02em; line-height: 1; color: var(--navy-900); font-feature-settings: "tnum"; }
+  .stat-num.compact { font-size: 40px; }
+  .stat-label { font-size: 14px; line-height: 1.5; color: var(--stone-700); margin-top: 14px; font-weight: var(--fw-medium); }
+  @media (max-width: 900px) { .ps2-grid, .stats-bar { grid-template-columns: 1fr; } }
+
+  /* ──────────────── FEATURE CARDS (Ordering Intelligence) ──────────────── */
+  .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .feat-card { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-2xl); padding: 32px; transition: all var(--duration-med) var(--ease-out); }
+  .feat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--stone-300); }
+  .feat-card h3 { font-size: 20px; font-weight: var(--fw-bold); color: var(--navy-900); margin: 0 0 12px; letter-spacing: -0.01em; line-height: 1.25; }
+  .feat-card p { font-size: 14.5px; line-height: 1.6; color: var(--stone-700); margin: 0; }
+  @media (max-width: 900px) { .feat-grid { grid-template-columns: 1fr; } }
+
+  /* ──────────────── INTEGRATION TABLE ──────────────── */
+  .int-table-wrap { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-2xl); overflow: hidden; }
+  .int-table { width: 100%; border-collapse: collapse; }
+  .int-table thead th {
+    text-align: left; padding: 20px 28px;
+    font-size: 10px; font-weight: var(--fw-bold); letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--stone-500);
+    background: var(--stone-100); border-bottom: 1px solid var(--stone-200);
+  }
+  .int-table thead th:last-child { text-align: right; }
+  .int-table tbody td { padding: 22px 28px; border-bottom: 1px solid var(--stone-200); font-size: 15px; color: var(--stone-700); vertical-align: middle; }
+  .int-table tbody tr:last-child td { border-bottom: none; }
+  .int-table tbody td:last-child { text-align: right; }
+  .int-system { font-size: 16px; font-weight: var(--fw-bold); color: var(--navy-900); letter-spacing: -0.005em; }
+  .int-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: var(--fw-bold);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .int-status svg { flex-shrink: 0; }
+  .int-status.direct { background: var(--mint-100); color: var(--mint-800); }
+  .int-status.partner { background: var(--sun-100); color: #8C6A00; }
+  .int-status.supported { background: var(--sky-100); color: #1A6FA8; }
+  @media (max-width: 720px) {
+    .int-table thead { display: none; }
+    .int-table tbody tr { display: block; padding: 18px 22px; border-bottom: 1px solid var(--stone-200); }
+    .int-table tbody td { display: block; padding: 4px 0; border: none; text-align: left !important; }
+    .int-table tbody td:first-child { padding-bottom: 8px; }
+  }
+
+  /* ──────────────── STACK FLOW (Concord tech stack + where Reeco fits) ──────────────── */
+  .stack-section { background: var(--stone-100); }
+  .stack-flow { display: flex; flex-direction: column; gap: 36px; }
+  .flow-label { font-size: 16px; font-weight: var(--fw-black); letter-spacing: -0.01em; color: var(--navy-900); margin-bottom: 16px; }
+  .flow-label .flow-label-note { display: block; margin-top: 3px; font-size: 13px; font-weight: var(--fw-medium); letter-spacing: 0; text-transform: none; color: var(--stone-500); }
+  .flow-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .flow-chip { display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-lg); font-size: 15px; font-weight: var(--fw-bold); color: var(--navy-900); box-shadow: var(--shadow-xs); }
+  .flow-chip.reeco { background: var(--mint-500); border-color: var(--mint-500); color: var(--navy-900); box-shadow: var(--shadow-md); }
+  .flow-chip.reeco svg { color: var(--navy-900); }
+  .flow-sep { color: var(--stone-500); font-weight: var(--fw-bold); font-size: 16px; }
+  .flow-sep.arrow { color: var(--mint-700); font-size: 20px; }
+  /* Hub diagram — Reeco connected bidirectionally to the existing systems */
+  .flow-hub { display: grid; grid-template-columns: minmax(150px, max-content) 44px minmax(240px, 1fr); gap: 14px; align-items: center; max-width: 720px; }
+  .hub-sys { width: 100%; justify-content: center; }
+  .flow-link { color: var(--mint-700); font-size: 26px; font-weight: var(--fw-bold); text-align: center; line-height: 1; }
+  .reeco-hub { grid-column: 3 / 4; grid-row: 1 / 4; align-self: stretch; background: var(--mint-500); border-radius: var(--radius-2xl); padding: 24px; box-shadow: var(--shadow-md); display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+  .reeco-hub-head { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: var(--fw-black); color: var(--navy-900); letter-spacing: -0.01em; }
+  .reeco-hub-head svg { color: var(--navy-900); }
+  .reeco-hub-mods { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .reeco-mod { background: rgba(255,255,255,0.9); border-radius: var(--radius-md); padding: 11px 12px; font-size: 13px; font-weight: var(--fw-bold); color: var(--navy-900); text-align: center; }
+  @media (max-width: 620px) {
+    .flow-hub { grid-template-columns: 1fr; gap: 10px; }
+    .reeco-hub { grid-column: 1; grid-row: 1; order: -1; }
+    .flow-link { transform: rotate(90deg); }
+  }
+  .flow-note { margin-top: 36px; font-size: 15px; line-height: 1.65; color: var(--stone-700); max-width: 820px; background: #fff; border: 1px solid var(--stone-200); border-left: 4px solid var(--mint-500); border-radius: var(--radius-lg); padding: 20px 24px; }
+  .flow-note strong { color: var(--navy-900); font-weight: var(--fw-bold); }
+
+  /* ──────────────── VIDEO CARDS ──────────────── */
+  .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .video-card { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-2xl); overflow: hidden; display: flex; flex-direction: column; transition: all var(--duration-med) var(--ease-out); }
+  .video-card:hover { box-shadow: var(--shadow-md); border-color: var(--stone-300); transform: translateY(-2px); }
+  .video-embed { aspect-ratio: 16 / 9; background: var(--navy-900); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; position: relative; }
+  .video-embed::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(43,204,137,0.18), transparent 60%); }
+  .video-play { width: 64px; height: 64px; border-radius: 50%; background: var(--mint-500); color: var(--navy-900); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .video-soon { font-size: 11px; font-weight: var(--fw-bold); letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); position: relative; z-index: 1; }
+  .video-embed-live { cursor: pointer; text-decoration: none; }
+  .video-embed-live .video-soon { color: var(--mint-300); }
+  .video-embed-live .video-play { transition: transform var(--duration-med) var(--ease-out), box-shadow var(--duration-med) var(--ease-out); }
+  .video-embed-live:hover .video-play { transform: scale(1.08); box-shadow: 0 8px 24px rgba(43,204,137,0.4); }
+  .video-body { padding: 26px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; }
+  .persona-tag { align-self: flex-start; font-size: 13px; font-weight: var(--fw-black); letter-spacing: 1.2px; text-transform: uppercase; color: var(--mint-800); background: var(--mint-100); padding: 9px 16px; border-radius: 999px; }
+  .video-card h3 { font-size: 19px; font-weight: var(--fw-bold); color: var(--navy-900); margin: 0; letter-spacing: -0.008em; line-height: 1.25; }
+  .video-card p { font-size: 14px; line-height: 1.6; color: var(--stone-700); margin: 0; }
+  @media (max-width: 900px) { .video-grid { grid-template-columns: 1fr; } }
+
+  /* ──────────────── MODULE OVERVIEW (The Platform) ──────────────── */
+  .platform-section { background: var(--stone-100); }
+  .module-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .module-card { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-2xl); overflow: hidden; display: flex; flex-direction: column; }
+  .module-top { background: var(--navy-900); color: #fff; padding: 22px 24px; display: flex; align-items: center; gap: 12px; }
+  .module-top .m-icon { width: 38px; height: 38px; border-radius: var(--radius-md); background: rgba(43,204,137,0.18); color: var(--mint-300); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .module-top h3 { font-size: 17px; font-weight: var(--fw-bold); color: #fff; margin: 0; letter-spacing: -0.005em; }
+  .module-list { list-style: none; margin: 0; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .module-list li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; font-size: 13.5px; line-height: 1.5; color: var(--stone-700); }
+  .module-list li svg { color: var(--mint-700); margin-top: 2px; flex-shrink: 0; }
+  @media (max-width: 980px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .module-grid { grid-template-columns: 1fr; } }
+
+  /* compact module strip (merged into Problem & Solution) */
+  .mod-subhead { margin-top: 56px; }
+  .mod-subhead h3 { font-size: 22px; font-weight: var(--fw-bold); color: var(--navy-900); letter-spacing: -0.01em; margin: 0 0 6px; }
+  .mod-subhead p { font-size: 15px; line-height: 1.6; color: var(--stone-700); margin: 0; max-width: 720px; }
+  .mod-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+  .mod-mini { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-xl); padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: all var(--duration-med) var(--ease-out); }
+  .mod-mini:hover { box-shadow: var(--shadow-md); border-color: var(--stone-300); transform: translateY(-2px); }
+  .mod-mini .m-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--navy-900); color: var(--mint-300); display: flex; align-items: center; justify-content: center; }
+  .mod-mini h4 { font-size: 16px; font-weight: var(--fw-bold); color: var(--navy-900); margin: 0; letter-spacing: -0.005em; }
+  .mod-mini p { font-size: 13.5px; line-height: 1.55; color: var(--stone-700); margin: 0; }
+  @media (max-width: 980px) { .mod-strip { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .mod-strip { grid-template-columns: 1fr; } }
+
+  /* ──────────────── FAQ ──────────────── */
+  .faq-section { background: var(--stone-100); }
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .faq-item { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-xl); overflow: hidden; transition: all var(--duration-med) var(--ease-out); }
+  .faq-item[open] { border-color: var(--mint-300); box-shadow: var(--shadow-sm); }
+  .faq-q {
+    padding: 22px 28px; cursor: pointer; list-style: none;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    font-size: 17px; font-weight: var(--fw-bold); color: var(--navy-900);
+    letter-spacing: -0.005em; line-height: 1.35;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-toggle { width: 28px; height: 28px; border-radius: 50%; background: var(--stone-200); color: var(--navy-900); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all var(--duration-med) var(--ease-out); }
+  .faq-item[open] .faq-toggle { background: var(--mint-500); color: #fff; transform: rotate(45deg); }
+  .faq-a { padding: 0 28px 24px; font-size: 15px; line-height: 1.65; color: var(--stone-700); }
+  .faq-a strong { color: var(--navy-900); font-weight: var(--fw-bold); }
+
+  /* ──────────────── TEAM ──────────────── */
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .team-card { background: #fff; border: 1px solid var(--stone-200); border-radius: var(--radius-2xl); padding: 28px; display: flex; align-items: center; gap: 20px; transition: all var(--duration-med) var(--ease-out); }
+  .team-card:hover { box-shadow: var(--shadow-md); border-color: var(--stone-300); }
+  .team-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--navy-900); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: var(--fw-black); flex-shrink: 0; }
+  .team-name { font-size: 18px; font-weight: var(--fw-bold); color: var(--navy-900); }
+  .team-title { font-size: 13px; color: var(--stone-700); margin: 3px 0 8px; font-weight: var(--fw-medium); }
+  .team-email { font-size: 14px; color: var(--sky-500); font-weight: var(--fw-semi); }
+  @media (max-width: 720px) { .team-grid { grid-template-columns: 1fr; } }
+
+  /* ──────────────── FOOTER ──────────────── */
+  footer { background: #fff; padding: 40px 32px; border-top: 1px solid var(--stone-200); }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .footer-brand { display: flex; align-items: center; gap: 14px; }
+  .footer-brand img { height: 22px; display: block; }
+  .footer-tag { font-size: 11px; color: var(--stone-500); letter-spacing: 1.5px; text-transform: uppercase; font-weight: var(--fw-bold); }
+  .footer-note { font-size: 12px; color: var(--stone-500); line-height: 1.55; max-width: 560px; text-align: right; }
+  .footer-note strong { color: var(--navy-900); font-weight: var(--fw-bold); }
+  @media (max-width: 720px) { .footer-note { text-align: left; } }
+
+  /* ──────────────── REVEAL ──────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ──────────── NAV ──────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand-group">
+      <a class="nav-brand" href="#top" aria-label="Reeco home">
+        <img src="assets/reeco-logo-primary-green.svg" alt="Reeco">
+      </a>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <div class="nav-context">Prepared for <strong>Concord Hospitality</strong></div>
+    </div>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="#platform" data-target="platform">Platform</a>
+      <a class="nav-tab" href="#stack" data-target="stack">Your Stack</a>
+      <a class="nav-tab" href="#demos" data-target="demos">Demo Videos</a>
+      <a class="nav-tab" href="#faq" data-target="faq">FAQ</a>
+    </div>
+    <div class="nav-cta-wrap">
+      <!-- TODO before publish: replace # with Zander's booking link -->
+      <a href="#" class="btn btn-primary">Schedule Demo <span class="arr">&rarr;</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ──────────── HERO ──────────── -->
+<section class="hero" id="top" data-screen-label="Hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Concord Hospitality <em>&times;</em> Reeco</h1>
+      <div class="hero-eyebrow" style="margin-bottom: 28px;"><span class="live-dot"></span>Digital Sales Room</div>
+      <p class="hero-sub">A hospitality-native procurement platform built to replace complexity with clarity, across purchasing, AP automation, inventory, and culinary management.</p>
+    </div>
+
+    <div class="meeting-card">
+      <div class="meeting-eyebrow">Next Step</div>
+      <div class="meeting-title">Follow-Up Demo</div>
+      <div class="meeting-when">
+        <div class="meeting-when-date">
+          <span class="day">TBD</span>
+          <span class="mon">Jun</span>
+        </div>
+        <div class="meeting-when-meta">
+          <div class="l1">Date to Be Confirmed</div>
+          <div class="l2">60 Minutes &middot; Demo + Deep Dive</div>
+          <div class="l3">Finance, Ops + F&amp;B Leadership</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── PROBLEM & SOLUTION ──────────── -->
+<section id="platform" data-screen-label="Problem & Solution">
+  <div class="container">
+    <div class="eyebrow">Problem &amp; Solution</div>
+    <h2 class="section-title">One Platform for a Fragmented Stack</h2>
+    <p class="section-sub">Great operators, fragmented tools. The data your teams need already exists — it's just never surfaced at the moment that matters: before the order is placed.</p>
+
+    <div class="ps2-grid">
+      <div class="ps2-card problem reveal">
+        <div class="ps2-eyebrow problem"><span class="ps-dot"></span>The Problem</div>
+        <h3>Where Money Slips Through</h3>
+        <ul class="ps2-list">
+          <li><span class="ps2-mark problem">&minus;</span><span>Punch-out platforms expose every item — GPO compliance is nearly impossible to enforce at scale.</span></li>
+          <li><span class="ps2-mark problem">&minus;</span><span>AP automation, forecasts, and purchasing live in separate tools. Disconnected data, surfaced too late at month-end.</span></li>
+          <li><span class="ps2-mark problem">&minus;</span><span>Missed bracket thresholds and autopilot reordering quietly cost hundreds in lost savings per order.</span></li>
+        </ul>
+      </div>
+
+      <div class="ps2-card answer reveal">
+        <div class="ps2-eyebrow answer"><span class="ps-dot"></span>The Answer</div>
+        <h3>One Platform, Built for Hospitality</h3>
+        <ul class="ps2-list">
+          <li><span class="ps2-mark answer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Curated, per-property stores — operators only see what they're approved to order. Compliance is the default.</span></li>
+          <li><span class="ps2-mark answer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Purchasing, AP automation, inventory, and culinary in one platform — complete 3-way match, zero re-keying.</span></li>
+          <li><span class="ps2-mark answer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Live ProfitSword forecast and bracket alerts in the cart — buyers are told before the order goes out, not after.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod-subhead reveal">
+      <h3>Four modules. One system.</h3>
+      <p>Each works standalone or as part of the complete stack — start where the need is greatest, expand as you're ready.</p>
+    </div>
+    <div class="mod-strip">
+      <div class="mod-mini reveal">
+        <div class="m-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+        <h4>Purchasing</h4>
+        <p>Curated, GPO-compliant stores with AI-suggested quantities and the live forecast right in the cart.</p>
+      </div>
+      <div class="mod-mini reveal">
+        <div class="m-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h4>AP Automation</h4>
+        <p>Automated 3-way match and GL coding at order time, wired directly to Aptech / PVNG — no export.</p>
+      </div>
+      <div class="mod-mini reveal">
+        <div class="m-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+        <h4>Inventory</h4>
+        <p>Par-level tracking and mobile counts that feed purchasing suggestions directly — less habit buying.</p>
+      </div>
+      <div class="mod-mini reveal">
+        <div class="m-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" y1="17" x2="18" y2="17"/></svg></div>
+        <h4>Culinary</h4>
+        <p>Recipe costing and menu margins tied to live prices and brand specs — for full-service F&amp;B.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── CONCORD TECH STACK + WHERE REECO FITS ──────────── -->
+<section class="stack-section" id="stack" data-screen-label="Your Stack">
+  <div class="container">
+    <div class="eyebrow">Your Tech Stack</div>
+    <h2 class="section-title">Where Reeco Fits</h2>
+    <p class="section-sub">Reeco doesn't ask you to rebuild your tech stack. It fills the gaps in it, adding the intelligence and control that's missing at the exact points where money is slipping through today.</p>
+
+    <div class="stack-flow">
+      <div class="flow-block reveal">
+        <div class="flow-label">Concord's Current Stack<span class="flow-label-note">Segmented across too many systems</span></div>
+        <div class="flow-row">
+          <span class="flow-chip">Aptech / PVNG</span>
+          <span class="flow-sep">+</span>
+          <span class="flow-chip">ProfitSword</span>
+          <span class="flow-sep">+</span>
+          <span class="flow-chip">Avendra</span>
+          <span class="flow-sep">+</span>
+          <span class="flow-chip">iBuy</span>
+          <span class="flow-sep">+</span>
+          <span class="flow-chip">Ottimate</span>
+          <span class="flow-sep">+</span>
+          <span class="flow-chip">BevSpot</span>
+        </div>
+      </div>
+      <div class="flow-block reveal">
+        <div class="flow-label">Where Reeco Sits<span class="flow-label-note">Single source for Purchasing, AP, Inventory, and Culinary</span></div>
+        <div class="flow-hub">
+          <span class="flow-chip hub-sys">Aptech / PVNG</span>
+          <span class="flow-link">&harr;</span>
+          <div class="reeco-hub">
+            <div class="reeco-hub-head">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.9H21l-5.3 4 2 6.9L12 15.7 6.3 19.8l2-6.9L3 8.9h6.6z"/></svg>
+              Reeco
+            </div>
+            <div class="reeco-hub-mods">
+              <span class="reeco-mod">AP Automation</span>
+              <span class="reeco-mod">Purchasing</span>
+              <span class="reeco-mod">Inventory</span>
+              <span class="reeco-mod">Culinary</span>
+            </div>
+          </div>
+          <span class="flow-chip hub-sys">ProfitSword</span>
+          <span class="flow-link">&harr;</span>
+          <span class="flow-chip hub-sys">Avendra</span>
+          <span class="flow-link">&harr;</span>
+        </div>
+      </div>
+    </div>
+    <p class="flow-note"><strong>Reeco unifies purchasing, AP automation, inventory, and culinary</strong> — staying in two-way sync with Aptech / PVNG and ProfitSword, and enforcing Avendra GPO compliance through a single operator-facing workflow. It replaces iBuy and Ottimate, not Avendra itself.</p>
+  </div>
+</section>
+
+<!-- ──────────── DEMO VIDEOS ──────────── -->
+<section id="demos" data-screen-label="Demo Videos">
+  <div class="container">
+    <div class="eyebrow">Persona-Specific Demos</div>
+    <h2 class="section-title">Concord-Specific Videos</h2>
+    <p class="section-sub">Each video is ten minutes, focused on what matters to that role. Finance doesn't need to watch the F&amp;B demo. Your ops leaders don't need to sit through invoice processing. Start with what's relevant to you.</p>
+
+    <div class="video-grid">
+      <!-- Card 1 — Finance.  Loom recording live. -->
+      <div class="video-card reveal">
+        <a class="video-embed video-embed-live" href="https://www.loom.com/share/e77b651f2fb84cf7bc2d3a9ec74a43fc" target="_blank" rel="noopener">
+          <div class="video-play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-soon">Watch Now &middot; 5 min</div>
+        </a>
+        <div class="video-body">
+          <span class="persona-tag">Finance</span>
+          <h3>AP Automation, GL Integration &amp; Budget Visibility</h3>
+          <p>How Reeco eliminates manual invoice processing, connects to Aptech/PVNG for automatic GL coding, and surfaces ProfitSword's daily forecast at every purchasing decision — before the month-end surprise.</p>
+        </div>
+      </div>
+
+      <!-- Card 2 — Operations.  Loom recording live. -->
+      <div class="video-card reveal">
+        <a class="video-embed video-embed-live" href="https://www.loom.com/share/2f9dda78aa844e4bb799a865c8f67af2" target="_blank" rel="noopener">
+          <div class="video-play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-soon">Watch Now &middot; 5 min</div>
+        </a>
+        <div class="video-body">
+          <span class="persona-tag">Operations</span>
+          <h3>Guardrails, Compliance &amp; Avendra Consolidation</h3>
+          <p>How curated stores enforce GPO compliance across all 150 properties, how approval workflows catch the $50 bracket misses before they cost $400, and how above-property teams get real-time visibility into what's being ordered — and why.</p>
+        </div>
+      </div>
+
+      <!-- Card 3 — F&B Operations.  Loom recording live. -->
+      <div class="video-card reveal">
+        <a class="video-embed video-embed-live" href="https://www.loom.com/share/45411f4b6da04adab3b43709ba5fe0eb" target="_blank" rel="noopener">
+          <div class="video-play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-soon">Watch Now &middot; 5 min</div>
+        </a>
+        <div class="video-body">
+          <span class="persona-tag">F&amp;B Operations</span>
+          <h3>Culinary, Inventory &amp; Brand Compliance</h3>
+          <p>How F&amp;B operators order to par, maintain brand-compliant item guides for select-service and full-service properties, manage recipe costing against live pricing, and stay on Avendra-approved products — without slowing down a busy kitchen team.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── ORDERING INTELLIGENCE ──────────── -->
+<section class="platform-section" id="intelligence" data-screen-label="Ordering Intelligence">
+  <div class="container">
+    <div class="eyebrow">Ordering Intelligence</div>
+    <h2 class="section-title">The $50 Miss That Costs $400</h2>
+    <p class="section-sub">Orders placed at $950 when the Sysco bracket threshold is $1,000 — leaving $400 in savings on the table because the operator didn't know, and didn't think to check. They're not trying to lose money. They just don't see it until after the order is done and it's already too late. Reeco surfaces that information before checkout, not after.</p>
+
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <h3>Bracket-Size Notifications</h3>
+        <p>When a cart is within a configured range of a Sysco or other distributor bracket threshold, Reeco flags it before checkout: "You're $50 from the next bracket — adding one more case would save you $400 on this order." The operator sees it while there's still time to act.</p>
+      </div>
+      <div class="feat-card reveal">
+        <h3>Configurable Approval Gates</h3>
+        <p>If an operator tries to submit an order that misses a bracket, you can configure a gate: send it for approval, or block until the threshold is met. Toilet paper doesn't expire. A case more won't hurt. The system just needed to tell them.</p>
+      </div>
+      <div class="feat-card reveal">
+        <h3>AI-Suggested Additions</h3>
+        <p>When a cart is close to a bracket threshold, Reeco can suggest items from that property's regular order guides to close the gap — relevant items that operator actually buys, not random fill. The right suggestion at the right moment, automatically.</p>
+      </div>
+      <div class="feat-card reveal">
+        <h3>All Suppliers, Side by Side</h3>
+        <p>Because Reeco shows all suppliers in a single view — not separate punch-out tabs — an operator can see their Sysco, Guest Supply, and other vendor orders in one place. Moving items between suppliers to hit a bracket threshold is a visible option. Today, that comparison doesn't happen because no one has time to open three different systems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── FAQ ──────────── -->
+<section class="faq-section" id="faq" data-screen-label="FAQ">
+  <div class="container">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="section-title">Common Questions</h2>
+
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary class="faq-q">
+          <span>Can we keep using Avendra as our GPO while running Reeco?</span>
+          <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </summary>
+        <div class="faq-a">Yes — Reeco is designed to work alongside Avendra, not against it. Your Avendra contracts, pricing, and approved item lists are loaded into the curated store we build for each property. Operators order through Reeco; your GPO relationship and rebates remain fully in place. We work directly with your embedded Avendra rep to make sure every item maps correctly from day one.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">
+          <span>What happens to the Ottimate rollout we're 30 percent through?</span>
+          <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </summary>
+        <div class="faq-a">Reeco's AP automation module covers everything Ottimate does — invoice ingestion, matching, GL coding, and Aptech integration — and because it lives in the same platform as purchasing, the match happens automatically. We would work with your team to map a transition that respects the rollout already in progress and gets properties fully live without disruption.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">
+          <span>How long does implementation take for a portfolio the size of Concord's?</span>
+          <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </summary>
+        <div class="faq-a">For a management company of Concord's scale, a phased rollout typically begins with a pilot group of 8&ndash;12 properties before scaling. Go-live on purchasing typically runs 4&ndash;6 weeks per phase; AP automation follows once purchasing is stable. Your Reeco customer success team manages the entire process — including working with your regional teams to build and validate the curated stores before launch.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">
+          <span>Is Reeco SOC 2 Type II certified?</span>
+          <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </summary>
+        <div class="faq-a">Yes. Reeco is <strong>SOC 2 Type II certified.</strong> Documentation is available for your CIO and IT team upon request. We would be glad to connect at HITEC or set up a separate technical review call with our IT leadership.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── YOUR REECO TEAM ──────────── -->
+<section data-screen-label="Your Reeco Team">
+  <div class="container">
+    <div class="eyebrow">Your Reeco Team</div>
+    <h2 class="section-title">Who's in Your Corner</h2>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">ZS</div>
+        <div>
+          <div class="team-name">Zander Srodes</div>
+          <div class="team-title">Head of Enterprise Sales</div>
+          <a class="team-email" href="/cdn-cgi/l/email-protection#81fbe0efe5e4f3f2c1f3e4e4e2eeafe2eeec"><span class="__cf_email__" data-cfemail="c1bba0afa5a4b3b281b3a4a4a2aeefa2aeac">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">PB</div>
+        <div>
+          <div class="team-name">Paul Bennie</div>
+          <div class="team-title">SVP of Revenue and Customer Success</div>
+          <a class="team-email" href="/cdn-cgi/l/email-protection#106071657c7250627575737f3e737f7d"><span class="__cf_email__" data-cfemail="4b3b2a3e27290b392e2e282465282426">[email&#160;protected]</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────── FOOTER ──────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/reeco-logo-primary-green.svg" alt="Reeco">
+      <span class="footer-tag">/// Digital Sales Room</span>
+    </div>
+    <div class="footer-note">
+      Concord Hospitality &times; Reeco Digital Sales Room <strong>///</strong> June 2026<br>
+      Learn more at <a href="https://www.reeco.com" target="_blank" rel="noopener">reeco.com</a> &middot; This page is private and intended only for Concord Hospitality team members.
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  (function () {
+    // Reveal-on-scroll
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    }
+
+    // Scrollspy for nav active state
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.nav-tab'));
+    var map = {};
+    tabs.forEach(function (t) {
+      var id = t.getAttribute('data-target');
+      var sec = document.getElementById(id);
+      if (sec) map[id] = { tab: t, sec: sec };
+    });
+    var ids = Object.keys(map);
+
+    if ('IntersectionObserver' in window && ids.length) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            tabs.forEach(function (t) { t.classList.remove('active'); });
+            var id = e.target.id;
+            if (map[id]) map[id].tab.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      ids.forEach(function (id) { spy.observe(map[id].sec); });
+    }
+  })();
+</script>
+
+</body>
+</html>
